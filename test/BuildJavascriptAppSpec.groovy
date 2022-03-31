@@ -8,15 +8,19 @@ class BuildJavascriptAppSpec extends JenkinsPipelineSpecification {
     }
 
     def "[buildJavascriptApp] will run npm publish if deploy is true"() {
+        setup:
+            def body = Mock(Closure)
         when:
-            buildJavascriptApp deploy: true
+            buildJavascriptApp deploy: true, body
         then:
             1 * getPipelineMock("sh")("npm publish")
     }
 
     def "[buildJavascriptApp] will not npm publish if deploy is false"() {
+        setup:
+            def body = Mock(Closure)
         when:
-            buildJavascriptApp deploy: false
+            buildJavascriptApp deploy: false, body
         then:
             0 * getPipelineMock("sh")("npm publish")
     }
